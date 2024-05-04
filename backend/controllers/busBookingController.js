@@ -74,3 +74,23 @@ export const getAllBooking = async( req, res) => {
     }
 }
 
+
+export const getAllBookedSeats = async (req, res) => {
+    try {
+        const allBookings = await BusBooking.find();
+        let bookedSeats = [];
+console.log(allBookings)
+        allBookings.forEach(booking => {
+            bookedSeats = bookedSeats.concat(booking.seatsBooked);
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Successfully fetched all booked seats",
+            data: bookedSeats
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};

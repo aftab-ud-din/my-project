@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const BusBooking = ({ bus, avgRating }) => {
 
-    const {scheduledAt, pick_up_time,_id, price, reviews} = bus;
+    const {scheduledAt, pick_up_time,_id, price, reviews, reserved} = bus;
     const [seats, setSeats]=useState([])
     //const id=bus.id;
     console.log("buses are",_id)
@@ -58,7 +58,7 @@ const BusBooking = ({ bus, avgRating }) => {
     const serviceFee = 10;
     console.log("selectedSeats = ",selectedSeats);
    //console.log("selected length = ",selectedSeats.length);
-   const totalAmount = Number(price) * 4 + Number(serviceFee);
+   const totalAmount = Number(price) * selectedSeats.length + Number(serviceFee);
 
     const handleClick = async e=>{
     

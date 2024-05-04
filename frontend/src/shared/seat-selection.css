@@ -39,8 +39,12 @@
 
 /* Hover and selected styles for seats */
 .seat:hover, .seat.selected {
-    background-color: #4CAF50; /* Green background for hover and selected */
-    color: white; /* White text color for better contrast */
+    color: #4CAF50; /* White text color for better contrast */
+    border-radius: 50%; /* Rounded seats for better visual appeal */
+}
+
+.seat.reserved {
+    color: #d81212; /* White text color for better contrast */
     border-radius: 50%; /* Rounded seats for better visual appeal */
 }
 
