@@ -1,21 +1,42 @@
 import BusBooking from '../models/BusBooking.js';
 
 //create booking
-export const createBooking = async( req, res) => {
-    const newBooking = BusBooking(req.body);
-    try {  
-        const savedBooking = await newBooking.save();
+export const createBooking = async (req, res) => {
+    const newBooking = req.body;
+    const userId = newBooking.userId;
+    const userEmail = newBooking.userEmail;
+    const fullName = newBooking.fullName;
+    const phone = newBooking.phone;
+    const seatsBooked = newBooking.seatsBooked;
+    const bookAt = newBooking.bookAt;
 
-        res.status(200).json
-        ({
-            success:true, 
-            message:"Your tour is booked", 
-            data: savedBooking
+    console.log(newBooking);
+
+    try {
+        const busbooked = await BusBooking.create({
+            userId: userId,
+            userEmail: userEmail,
+            fullName: fullName,
+            phone: phone,
+            seatsBooked: seatsBooked,
+            bookAt: bookAt
+        });
+
+        console.log("Booking successful");
+        res.status(200).json({
+            success: true,
+            message: "Your tour is booked",
+            data: busbooked
         });
     } catch (err) {
-        res.status(500).json({success: true, message:"internal server error"});
+        console.error("Error:", err);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
     }
-}
+};
+
 
 //get single booking
 export const getBooking = async( req, res) => {

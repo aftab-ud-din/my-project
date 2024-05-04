@@ -33,7 +33,7 @@ axios.get(`${BASE_URL}/buses/${id}`)
  }).catch(err=>{
   console.log(err)
  })
-})
+},[])
   
 
   // destructure properties from bus object

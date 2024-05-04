@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import './bus-booking.css'
 import { Form, FormGroup, ListGroup, ListGroupItem, Button} from "reactstrap";
 
@@ -7,10 +7,13 @@ import SeatSelection from '../../shared/SeatSelection';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
+import axios from 'axios';
 
 const BusBooking = ({ bus, avgRating }) => {
 
-    const {scheduledAt, pick_up_time, price, id, reviews} = bus;
+    const {scheduledAt, pick_up_time,_id, price, reviews} = bus;
+    //const id=bus.id;
+    console.log("buses are",_id)
     const navigate =useNavigate();
 
     const {user} = useContext(AuthContext);
@@ -18,18 +21,22 @@ const BusBooking = ({ bus, avgRating }) => {
     const [busbooking, setBusBooking] = useState({
         userId: user && user.data._id,
         userEmail:user && user.data.email,
-        busId:id,
+        busId:_id,
         fullName:'',
         phone:'',
         seatsBooked:[],
         bootAt:'',
     });
 
-    const [selectedSeats, setSelectedSeats] = useState(null);
+    const [selectedSeats, setSelectedSeats] = useState([]);
 
- //   const handleSeatSelectionChange = (selectedSeats) => {
- //       setSelectedSeats(selectedSeats);
- //   };
+useEffect(()=>{
+    console.log("seaAt",selectedSeats)
+})
+//    const handleSeatSelectionChange = (selectedSeats) => {
+//        setSelectedSeats(selectedSeats);
+       
+//    };
     
 
     
@@ -46,30 +53,26 @@ const BusBooking = ({ bus, avgRating }) => {
    const totalAmount = Number(price) * 4 + Number(serviceFee);
 
     const handleClick = async e=>{
-        e.preventDefault();
-
+    
+        
         console.log(busbooking);
 
         try {
-            if(!user || user === undefined || user===null){
-                return alert('please sign in')
+            // if(!user || user === undefined || user===null){
+            //     return alert('please sign in')
+            // }
+            ///axios.post('createBooking')
+        
+            const res = await axios.post(`${BASE_URL}/busbooking`,busbooking)
+            console.log(res)
+
+            //const result = await res.json();
+            if(res.status==200) {
+                
+                navigate("/thank-you");
             }
 
-            const res = await fetch(`${BASE_URL}/busbooking`,{
-                method:'post',
-                headers:{
-                    'content-type':'application/json'
-                },
-                credentials:'include',
-                body:JSON.stringify(busbooking)
-            })
-
-            const result = await res.json();
-            if(!res.ok) {
-                return alert(result.message)
-            }
-
-            navigate("/thank-you");
+            
 
         } catch(err) {
             alert(err.message)
@@ -113,7 +116,7 @@ const BusBooking = ({ bus, avgRating }) => {
         </Form>
     </div>
     {/*=====================seat selecton========================*/}
-    <SeatSelection />
+    <SeatSelection setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} />
     {/*=====================seat selecton========================*/}
     {/*=====================Booking Bottom========================*/}
         <div className="booking_bottom">

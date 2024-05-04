@@ -20,7 +20,7 @@ const busBookingSchema = new mongoose.Schema(
       },
     seatsBooked: { 
         type: [Number], 
-        required: true 
+  
     },
     phone: {
 		type: Number,
@@ -29,7 +29,7 @@ const busBookingSchema = new mongoose.Schema(
 
     bookAt: {
 		type: Date,
-		required: true
+
 	}
 },
 { timestamps: true }
