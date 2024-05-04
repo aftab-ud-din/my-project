@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import './seat-selection.css'; // Make sure to import or define your styles
 import convertToLinearIndices from '../utils/seatToNumber';
+import { BASE_URL } from '../utils/config';
+import axios from 'axios';
 
 const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
     let totalRows = 2;
@@ -17,12 +19,37 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
         totalRows = 5;
         seatsPerRow = 4;
     }
+
+    const [temp, setTemp] = useState([]);
     
     useEffect(()=>{
         console.log(convertToLinearIndices(selectedSeats,seatsPerRow))
-        setSeats(convertToLinearIndices(selectedSeats,seatsPerRow))
-    })
-    const initiallyReservedSeats = ['1-2', '3-4', '4-3', '4-4'];
+        setTemp(convertToLinearIndices(selectedSeats,seatsPerRow))
+        setSeats(temp)
+    },[])
+
+      const [initiallyReservedSeats, setInitiallyReservedSeats] = useState([]);
+
+    useEffect(() => {
+      const fetchBookedSeats = async () => {
+          try {
+              const res = await axios.get(`${BASE_URL}/busbooking/getAll/id`);
+              console.log('reserved seats ',res)
+
+              if (res==200) {
+                  setInitiallyReservedSeats(res);
+                  
+              } else {
+                  console.error("Failed to fetch booked seats:", res.message);
+              }
+          } catch (err) {
+            alert(err.message)
+          }
+      };
+
+      fetchBookedSeats();
+  }, []);
+
 
     const handleSeatClick = (row, seatNumber) => {
         const seatId = `${row}-${seatNumber}`;
@@ -61,6 +88,7 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
         return seats;
     };
 
+
     return (
         <Container>
             <h4 className='mt-5 mb-3'>Bus Seat Booking</h4>
@@ -68,7 +96,7 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
                 <Row><span className='driver'><i className="ri-steering-fill"></i></span></Row>
                 <Row>{renderSeats()}</Row>
             </div>
-            <div><h4>Selected Seats: {selectedSeats.join(', ')}</h4></div>
+            <div><h4>Selected Seats: {temp.join(', ')}</h4></div>
         </Container>
     );
 };
