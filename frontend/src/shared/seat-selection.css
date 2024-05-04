@@ -1,27 +1,55 @@
+/* General container styling */
 .seat_booking_32 {
     padding: 1rem;
     border-radius: 35px;
-    border: 3px solid rgba(223, 24, 24, 0.884);  
-}
-
-.seat_booking_32 .col3 {
-    flex-direction: row-reverse;
-}
-.seat_booking_32 i {
-    font-size: 25px;
-    padding: 0.3rem;
-}
-
-.seat_booking_32 i:hover {
-    color: greenyellow;
-    cursor: pointer;
-    border-radius: 50px;
-}
-
-
-.seat_booking_32 .driver i{
-    color: blue;
-    align-items: center;
+    border: 3px solid rgba(223, 24, 24, 0.884);
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    margin: auto; /* Centers the booking area horizontally */
+    width: 90%; /* Adjust width as needed */
+}
+
+/* Style adjustments for the driver icon */
+.seat_booking_32 .driver i {
+    color: blue;
+    font-size: 30px;
+    display: flex; /* Center the icon */
+    justify-content: center;
+}
+
+/* Style for each row of seats */
+.seat-row {
+    display: flex;
+    justify-content: space-around; /* Even spacing between seats */
+    width: 100%; /* Ensure the row takes full width */
+    margin-bottom: 10px; /* Space between rows */
+}
+
+/* Style for each seat in the 32-seater bus */
+.seat.thirtytwo-seater {
+    flex: 0 0 25%; /* Flex-basis for 4 seats per row */
+    max-width: 25%; /* Maximum width for each seat in a 4-seat configuration */
+    text-align: center; /* Center the seat icon */
+    cursor: pointer;
+    position: relative; /* For positioning the seat number or icon */
+    padding: 8px; /* Padding inside each seat for spacing */
+    margin: 2px; /* Margins around each seat */
+}
+
+/* Hover and selected styles for seats */
+.seat:hover, .seat.selected {
+    background-color: #4CAF50; /* Green background for hover and selected */
+    color: white; /* White text color for better contrast */
+    border-radius: 50%; /* Rounded seats for better visual appeal */
+}
+
+
+
+/* Adjustments for icons within seats for better visibility */
+.seat i {
+    font-size: 25px; /* Larger icons for clarity */
+    display: block;
+    margin: auto; /* Center icon vertically and horizontally */
+    padding: 5px; /* Padding around icon for spacing */
 }

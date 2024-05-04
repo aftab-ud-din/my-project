@@ -7,16 +7,20 @@ import SeatSelection from '../../shared/SeatSelection';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
+import convertToLinearIndices from "../../utils/seatToNumber"
+
 import axios from 'axios';
 
 const BusBooking = ({ bus, avgRating }) => {
 
     const {scheduledAt, pick_up_time,_id, price, reviews} = bus;
+    const [seats, setSeats]=useState([])
     //const id=bus.id;
     console.log("buses are",_id)
     const navigate =useNavigate();
 
     const {user} = useContext(AuthContext);
+   
 
     const [busbooking, setBusBooking] = useState({
         userId: user && user.data._id,
@@ -30,9 +34,13 @@ const BusBooking = ({ bus, avgRating }) => {
 
     const [selectedSeats, setSelectedSeats] = useState([]);
 
-useEffect(()=>{
-    console.log("seaAt",selectedSeats)
-})
+    useEffect(() => {
+        setBusBooking(prev => ({
+            ...prev,
+            seatsBooked: seats
+        }));
+    }, [seats]);
+    
 //    const handleSeatSelectionChange = (selectedSeats) => {
 //        setSelectedSeats(selectedSeats);
        
@@ -116,7 +124,7 @@ useEffect(()=>{
         </Form>
     </div>
     {/*=====================seat selecton========================*/}
-    <SeatSelection setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} />
+    <SeatSelection setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} bus={bus} setSeats={setSeats}/>
     {/*=====================seat selecton========================*/}
     {/*=====================Booking Bottom========================*/}
         <div className="booking_bottom">
