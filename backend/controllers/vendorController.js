@@ -1,15 +1,22 @@
 import Vendor from '../models/Vendor.js';
+import User from '../models/User.js';
 
 //create Vendor
 export const createVendor = async (req, res) => {
-    const newVendor = new Vendor(req.body)
+    const newVendor = new Vendor(req.body);
     try {
         const savedVendor = await newVendor.save();
+        const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
+            $set: {
+                // Assuming you want to update specific fields, add them here:
+                isVendor: true,
+                // other fields to update...
+            }})
         res.status(200).json
         ({
             success:true, 
             message:'Successfully created',
-            data:savedTour
+            data:updatedUser
         });
     } catch (err) {
         res.status(500).json

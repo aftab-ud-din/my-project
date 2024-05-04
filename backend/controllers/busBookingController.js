@@ -2,7 +2,6 @@ import BusBooking from '../models/BusBooking.js';
 
 //create booking
 export const createBooking = async (req, res) => {
-    console.log(req.body)
     const newBooking = req.body;
     const userId = newBooking.userId;
     const userEmail = newBooking.userEmail;

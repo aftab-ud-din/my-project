@@ -22,7 +22,7 @@ const TourForm = ({vendor}) => {
         price:null,
         photo:'',
         maxGroupSize:'',
-        vendorId: '',
+        vendorId: user && user.data._id,
     });
 console.log(tour);
    

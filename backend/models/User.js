@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Wallet"
     },
+    isVendor:{
+      type:Boolean,
+      defualt:false
+    }
   },
   { timestamps: true }
 );

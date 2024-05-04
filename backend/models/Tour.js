@@ -16,12 +16,12 @@ const tourSchema = new mongoose.Schema(
       required: true,
     },
     distance: {
-      type: Number,
+      type: String,
       required: true,
     },
     photo: {
       type: String,
-      required: true,
+ 
     },
     desc: {
       type: String,
@@ -38,7 +38,7 @@ const tourSchema = new mongoose.Schema(
 
     vendorId: {
       type: mongoose.Types.ObjectId,
-      ref: "Vendor"
+      ref: "User"
     },
 
     reviews: [

@@ -8,8 +8,9 @@ import useFetch from './../hooks/useFetch'
 import { BASE_URL } from './../utils/config'
 import {AuthContext} from './../context/AuthContext'
 import heroImg from '../assets/images/vendor.jpg'
+import '../components/Booking/booking.css'
 
-const Vendor = () => {
+const VendorTour = () => {
   return (
     <section>
         <Row className='p-3'>
@@ -45,4 +46,4 @@ const Vendor = () => {
 
 };
 
-export default Vendor
+export default VendorTour
