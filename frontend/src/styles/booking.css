@@ -1,0 +1,50 @@
+.bookingSection {
+    margin: 10%;
+}
+
+.tourBookings  {
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    width: max-content;
+    margin-bottom: 50px;
+}
+
+.busBookings {
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    width: max-content;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    font-size: 30px;
+    color: var(--secondary-color);
+    font-family: monospace;
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    font-size: 18px;
+    color: gray;
+    font-family: monospace;
+}
+
+.divOne .btn {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white ;
+}
+
+.info .btn {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white ;
+}
+

@@ -1,0 +1,129 @@
+[
+    {
+      "title": "Westminister Bridge",
+      "location": "Gilgit",
+      "destination": "Islamabad",
+      "address": "Somewhere in Gigit",
+      "distance": 1600,
+      "price": 99,
+      "numberOfSeats": 32,
+      "desc": "this is the description",
+      "reviews": [],
+  
+      "photo": "/bus-images/bus-image.png",
+      "featured": true
+    },
+    {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      },
+      {
+        "title": "Westminister Bridge",
+        "location": "Gilgit",
+        "destination": "Islamabad",
+        "address": "Somewhere in Gigit",
+        "distance": 1600,
+        "price": 99,
+        "numberOfSeats": 32,
+        "desc": "this is the description",
+        "reviews": [],
+    
+        "photo": "/bus-images/bus-image.png",
+        "featured": true
+      }
+  ]
+  

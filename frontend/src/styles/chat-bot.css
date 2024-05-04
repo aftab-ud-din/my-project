@@ -1,0 +1,20 @@
+
+.chatbot-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;/* Set the height of the container to the full viewport height */
+}
+
+
+.imgDiv {
+    max-width: 30%; /* Ensure the image doesn't exceed its natural size */
+    max-height: 70%;
+}
+
+.text {
+    margin-top: 10px; /* Adjust the spacing between image and text as needed */
+    text-align: center;
+    font-size: 24px; /* Adjust the font size as needed */
+  }

@@ -1,0 +1,60 @@
+.profileSeciton {
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('../assets/images/background.jpg') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;   
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem; 
+    background: white;  
+    border-radius: 30px;
+}
+
+
+.divOne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    font-size: 30px;
+    color: var(--secondary-color);
+    font-family: monospace;
+}
+
+
+
+.imgDiv {
+    width: 60%;
+    text-align: center;
+}
+
+.imgDiv img {
+    width: 70%;
+    object-fit: contain;
+    margin-bottom: 3rem;
+}
+
+.profileSeciton .tourBookings {
+    background: white;  /* Set background color for tourBookings */
+}
+
+.profileSeciton .busBookings {
+    background: white;  /* Set background color for busBookings */
+}
