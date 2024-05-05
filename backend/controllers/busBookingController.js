@@ -1,9 +1,11 @@
 import BusBooking from '../models/BusBooking.js';
+import mongoose from 'mongoose';
 
 //create booking
 export const createBooking = async (req, res) => {
     const newBooking = req.body;
     const userId = newBooking.userId;
+    const busId=newBooking.busId;
     const userEmail = newBooking.userEmail;
     const fullName = newBooking.fullName;
     const phone = newBooking.phone;
@@ -18,6 +20,7 @@ export const createBooking = async (req, res) => {
             userEmail: userEmail,
             fullName: fullName,
             phone: phone,
+            busId:busId,
             seatsBooked: seatsBooked,
             bookAt: bookAt
         });
@@ -75,18 +78,17 @@ export const getAllBooking = async( req, res) => {
 
 
 export const getAllBookedSeats = async (req, res) => {
+    const busId = req.params.id; // Ensure your route is setup to capture :id
+    const bus_id=new mongoose.Types.ObjectId(busId);
     try {
-        const allBookings = await BusBooking.find();
-        let bookedSeats = [];
-console.log(allBookings)
-        allBookings.forEach(booking => {
-            bookedSeats = bookedSeats.concat(booking.seatsBooked);
-        });
+        const allBookings = await BusBooking.find({ busId: bus_id });
+        console.log(allBookings)
+        let bookedSeats = allBookings.reduce((acc, booking) => acc.concat(booking.seatsBooked), []);
 
         res.status(200).json({
             success: true,
             message: "Successfully fetched all booked seats",
-            data: bookedSeats
+            data: bookedSeats // returning only the seats booked
         });
     } catch (err) {
         console.error(err);

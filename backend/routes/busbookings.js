@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', createBooking);
 router.get('/:id', getBooking);
 router.get('/', verifyAdmin, getAllBooking);
-router.get('/getAll/id', getAllBookedSeats);
+router.get('/getAll/seats/:id', getAllBookedSeats);
 
 
 export default router

@@ -5,7 +5,7 @@ import convertToLinearIndices from '../utils/seatToNumber';
 import { BASE_URL } from '../utils/config';
 import axios from 'axios';
 
-const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
+const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats,seats}) => {
     let totalRows = 2;
     let seatsPerRow = 10; // Default configuration
 
@@ -20,24 +20,25 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
         seatsPerRow = 4;
     }
 
-    const [temp, setTemp] = useState([]);
+  
     
     useEffect(()=>{
-        console.log(convertToLinearIndices(selectedSeats,seatsPerRow))
-        setTemp(convertToLinearIndices(selectedSeats,seatsPerRow))
-        setSeats(temp)
-    },[])
+       // console.log(convertToLinearIndices(selectedSeats,seatsPerRow))
+        setSeats(convertToLinearIndices(selectedSeats,seatsPerRow))
+       
+    },[selectedSeats])
 
       const [initiallyReservedSeats, setInitiallyReservedSeats] = useState([]);
 
     useEffect(() => {
       const fetchBookedSeats = async () => {
           try {
-              const res = await axios.get(`${BASE_URL}/busbooking/getAll/id`);
-              console.log('reserved seats ',res)
+              const res = await axios.get(`${BASE_URL}/busbooking/getAll/seats/${bus._id}`);
+              console.log('reserved seats ',res.data.data)
+              setInitiallyReservedSeats(res.data.data);
 
               if (res==200) {
-                  setInitiallyReservedSeats(res);
+                  setInitiallyReservedSeats(res.data.data);
                   
               } else {
                   console.error("Failed to fetch booked seats:", res.message);
@@ -50,10 +51,22 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
       fetchBookedSeats();
   }, []);
 
-
+  const convertFromLinearIndices = (indices, colsPerRow) => {
+    return indices.map(index => {
+        const row = Math.floor((index - 1) / colsPerRow) + 1;
+        const col = (index - 1) % colsPerRow + 1;
+        return `${row}-${col}`;
+    });
+}
+let reservedSeats=[]
     const handleSeatClick = (row, seatNumber) => {
+        console.log("jjjj",initiallyReservedSeats)
+       reservedSeats=convertFromLinearIndices(initiallyReservedSeats,seatsPerRow)
+        console.log("=>>>>>>",reservedSeats)
+    
         const seatId = `${row}-${seatNumber}`;
-        if (initiallyReservedSeats.includes(seatId)) {
+        
+        if (reservedSeats.includes(seatId)) {
             alert('This seat is already reserved!');
             return;
         }
@@ -73,15 +86,19 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
             for (let seatNumber = 1; seatNumber <= seatsPerRow; seatNumber++) {
                 const seatId = `${row}-${seatNumber}`;
                 const isSelected = isSeatSelected(row, seatNumber);
+                const isReserved = reservedSeats.includes(seatId);
+              
                 rowSeats.push(
+                    
                     <Col
                         key={seatId}
-                        className={`seat ${isSelected ? 'selected' : ''} ${bus?.totalSeats === 20 ? 'twenty-seater' : ''}`}
+                        className={`seat ${isSelected ? 'selected' : ''} ${isReserved ? 'reserved' : ''} ${bus?.totalSeats === 20 ? 'twenty-seater' : ''}`}
                         onClick={() => handleSeatClick(row, seatNumber)}
                     >
                         <span><i className="ri-user-fill"></i></span>
                     </Col>
                 );
+                
             }
             seats.push(<Row key={row} className={`seat-row`}>{rowSeats}</Row>);
         }
@@ -96,7 +113,17 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats}) => {
                 <Row><span className='driver'><i className="ri-steering-fill"></i></span></Row>
                 <Row>{renderSeats()}</Row>
             </div>
-            <div><h4>Selected Seats: {temp.join(', ')}</h4></div>
+            <div> <h4>Selected seats Number: </h4><div>
+            {seats.length > 0 ? (
+                seats.map((seat, index) => (
+                    <span key={index} className="seat-number">
+                        {seat}{index < seats.length - 1 ? ', ' : ''}
+                    </span>
+                ))
+            ) : (
+                <span>No seats selected</span>
+            )}
+        </div></div>
         </Container>
     );
 };

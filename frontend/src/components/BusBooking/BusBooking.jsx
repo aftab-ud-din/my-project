@@ -124,7 +124,7 @@ const BusBooking = ({ bus, avgRating }) => {
         </Form>
     </div>
     {/*=====================seat selecton========================*/}
-    <SeatSelection setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} bus={bus} setSeats={setSeats}/>
+    <SeatSelection setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} bus={bus} setSeats={setSeats} seats={seats}/>
     {/*=====================seat selecton========================*/}
     {/*=====================Booking Bottom========================*/}
         <div className="booking_bottom">

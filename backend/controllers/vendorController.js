@@ -6,6 +6,7 @@ export const createVendor = async (req, res) => {
     const newVendor = new Vendor(req.body);
     try {
         const savedVendor = await newVendor.save();
+        console.log(savedVendor)
         const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
             $set: {
                 // Assuming you want to update specific fields, add them here:
