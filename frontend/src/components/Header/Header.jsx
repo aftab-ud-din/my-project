@@ -66,11 +66,16 @@ const Header = () => {
   }, []);
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    if(user.data.isAdmin){
+      navigate('/admin');
+    }else{
+      navigate('/profile');
+    }
+  
   };
 
   const handleAdminClick = () => {
-    navigate('/admin');
+  
   };
 
 
