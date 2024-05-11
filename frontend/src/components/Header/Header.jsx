@@ -66,8 +66,19 @@ const Header = () => {
   }, []);
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    if(user.data.isAdmin){
+      navigate('/admin');
+    }else{
+      navigate('/profile');
+    }
+  
   };
+
+  const handleAdminClick = () => {
+  
+  };
+
+
 
   return (
     <header className="header" ref={headerRef}>
@@ -77,8 +88,8 @@ const Header = () => {
             <div className="logo">
               <img src={logo} alt="" />
             </div>
-            <div className="navigation">
-              <ul className="menu d-flex align-items-center gap-5">
+            <div className="navigations">
+              <ul className="menu align-items-center gap-5">
                 { navLinks.map((item, index) => (
                   <li className="nav_item" key={index}>
                     <NavLink
@@ -100,10 +111,20 @@ const Header = () => {
                   {
                     user? (
                     <>
-                    <button className='invisible-button' onClick={handleProfileClick}>
+                    {
+                    user.isAdmin? (
+                      <>
+                    <button className='invisible-button' onClick={handleAdminClick}>
                       <h5 className="mb-0">{user.data.username}</h5>
                     </button> 
                       {console.log('User from context:', user.data.username)}
+                      </> ):(<>
+                        <button className='invisible-button' onClick={handleProfileClick}>
+                        <h5 className="mb-0">{user.data.username}</h5>
+                      </button> 
+                        {console.log('User from context:', user.data.username)}
+                        </> )
+                      }
                       <Button className='btn btn-dark' onClick={logout}>Logout</Button>
                     </>
                     ):(
