@@ -6,27 +6,31 @@ export const createVendor = async (req, res) => {
     const newVendor = new Vendor(req.body);
     try {
         const savedVendor = await newVendor.save();
-        console.log(savedVendor)
+        console.log("Saved Vendor:", savedVendor);
+
         const updatedUser = await User.findByIdAndUpdate(req.body.userId, {
             $set: {
-                // Assuming you want to update specific fields, add them here:
                 isVendor: true,
                 // other fields to update...
-            }})
-        res.status(200).json
-        ({
-            success:true, 
-            message:'Successfully created',
-            data:updatedUser
+            }
+        }, { new: true });  // Make sure to include this option
+
+        console.log("Updated User:", updatedUser);
+
+        res.status(200).json({
+            success: true,
+            message: 'Successfully created',
+            data: updatedUser
         });
     } catch (err) {
-        res.status(500).json
-        ({
-            success: false, 
-            message:'Failed to create. Try again'
+        console.error("Error in creating vendor:", err);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create. Try again'
         });
     }
 };
+
 
 //update Vendor
 export const updateVendor = async (req, res) => {
