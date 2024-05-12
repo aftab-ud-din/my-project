@@ -51,7 +51,7 @@ const Bus = () => {
       <section>
         <Container>
           <Row>
-            <BusSearchBar onSearch={handleSearch} setIsSearching={setIsSearching}/>
+            <BusSearchBar onSearch={handleSearch} setIsSearching={setIsSearching} isSearching={isSearching}/>
           </Row>
         </Container>
       </section>

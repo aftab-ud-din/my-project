@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Form, FormGroup, Input, Label,Button } from 'reactstrap';
 
-const BusSearchBar = ({ onSearch,setIsSearching }) => {
+const BusSearchBar = ({ onSearch,setIsSearching,isSearching }) => {
     const [price, setPrice] = useState('');
     const [destination, setDestination] = useState('');
     const [source, setSource] = useState('');
@@ -95,8 +95,10 @@ const BusSearchBar = ({ onSearch,setIsSearching }) => {
 
                     <span className="search_icon" onClick={searchHandler}>
                         <i className="ri-search-line"></i>
-                    </span>
-                    <Button color="secondary" onClick={resetSearch}>Clear</Button>
+                    </span>{isSearching&&<Button color="secondary" onClick={resetSearch}>Clear</Button>
+                        
+                    }
+                    
                 </Form>
             </div>
         </Col>
