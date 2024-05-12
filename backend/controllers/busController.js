@@ -105,6 +105,78 @@ export const getAllBus = async (req, res) => {
         });
     }
 }
+const escapeRegex = (text) => {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+};
+
+export const searchBuses = async (req, res) => {
+    try {
+        let { page = 0 } = req.query;
+        page = parseInt(page) || 0;
+        const pageSize = 8;
+        const skip = page * pageSize;
+
+        let filter = {};
+
+        // Iterate over all query parameters
+        for (let key in req.query) {
+            if (key.includes('price')) {
+                // Extract the operator and value
+                const operator = key.includes('<') ? '$lt' : key.includes('>') ? '$gt' : '$eq';
+                let value = req.query[key].replace('=', '').trim(); // Remove '=' and trim whitespace
+                value = parseFloat(value);
+                if (!isNaN(value)) {
+                    filter.price = { [operator]: value };
+                }
+            } else if (key.includes('distance')) {
+                const operator = key.includes('<') ? '$lt' : key.includes('>') ? '$gt' : '$eq';
+                let value = req.query[key].replace('=', '').trim();
+                value = parseFloat(value);
+                if (!isNaN(value)) {
+                    filter.distance = { [operator]: value };
+                }
+            } if (key === 'drop_address' || key === 'pickup_address') {  // Changed from 'source_address' to 'pickup_address'
+                filter[key] = { $regex: new RegExp(escapeRegex(req.query[key]), 'i') };
+            }
+        }
+
+        console.log('Filter used for search:', JSON.stringify(filter));
+
+        if (Object.keys(filter).length === 0) {
+            return res.json({
+                success: true,
+                message: "No valid search parameters provided. Returning all records.",
+                data: [],
+                total: 0,
+                page: page,
+                pages: 0
+            });
+        }
+
+        const [buses, total] = await Promise.all([
+            Bus.find(filter).skip(skip).limit(pageSize),
+            Bus.countDocuments(filter)
+        ]);
+
+        res.json({
+            success: true,
+            data: buses,
+            total: total,
+            page: page,
+            pages: Math.ceil(total / pageSize)
+        });
+    } catch (error) {
+        console.error("Error searching buses:", error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to retrieve bus data due to an error: ' + error.message
+        });
+    }
+};
+
+
+
+
 
 export const getBusBySearch = async(req,res)=> {
 
