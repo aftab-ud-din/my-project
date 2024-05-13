@@ -14,18 +14,18 @@ const VendorForm = () => {
     const {user} = useContext(AuthContext);
 
     const [vendor, setVendor] =useState({
-        userId: user && user.data._id,
+        userId: user && user.data ? user.data._id : null,
         fullName:'',
         phone: null,
         license: null,
     });
     
 console.log(vendor);
-
+const {dispatch} = useContext(AuthContext);
     const handleChange = e =>{
         setVendor(prev=>({...prev, [e.target.id]: e.target.value }));
     };
-
+    
     const handleClick = async e=>{
         e.preventDefault();
 
@@ -35,7 +35,7 @@ console.log(vendor);
             if(!user || user === undefined || user===null){
                 return alert('please sign in')
             }
-
+            //dispatch({type:"LOGIN_START"});
             const res = await fetch(`${BASE_URL}/vendors`,{
                 method:'post',
                 headers:{
@@ -44,14 +44,18 @@ console.log(vendor);
                 credentials:'include',
                 body:JSON.stringify(vendor)
             })
-
+            
             const result = await res.json();
+            console.log("hhh",result)
+
             if(!res.ok) {
+                
+                
                 return alert(result.message)
             }else{
                 
             }
-
+            dispatch({type:"LOGIN_SUCCESS", payload:result});
             navigate("/vendor-tour");
 
         } catch(err) {

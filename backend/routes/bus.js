@@ -6,7 +6,7 @@ import {
     getSingleBus, 
     getBusBySearch,
     getBusCount, 
-    updateBus 
+    updateBus , searchBuses
 } from './../controllers/busController.js';
 import { verifyAdmin } from '../utils/verifyToken.js';
 
@@ -26,6 +26,7 @@ router.get('/:id', getSingleBus);
 
 // getAll new Bus
 router.get('/', getAllBus);
+router.get('/search/getBusBySearch', searchBuses);
 
 // get Bus by search
 router.get("/search/getBusBySearch",getBusBySearch);

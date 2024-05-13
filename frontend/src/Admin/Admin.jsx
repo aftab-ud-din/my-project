@@ -1,10 +1,15 @@
-import React from 'react'
-import './admin.css'
 
-const Admin = () => {
+import './Admin.css'
+import Dashboard from './components/Dashboard';
+
+function Admin() {
   return (
-    <div>Admin</div>
-  )
+    <div className="Admin">
+      <div className="AppGlass">
+        <Dashboard/>
+      </div>
+    </div>
+  );
 }
 
-export default Admin
+export default Admin;

@@ -1,82 +1,108 @@
-import React, {useRef} from 'react'
-import './search-bar.css'
-import { Col, Form, FormGroup } from "reactstrap";
+import React, { useState } from 'react';
+import { Col, Form, FormGroup, Input, Label,Button } from 'reactstrap';
 
-import { BASE_URL } from './../utils/config.js';
-import { useNavigate } from 'react-router-dom';
+const BusSearchBar = ({ onSearch,setIsSearching,isSearching }) => {
+    const [price, setPrice] = useState('');
+    const [destination, setDestination] = useState('');
+    const [source, setSource] = useState('');
+    const [distance, setDistance] = useState('');
+    const [priceOption, setPriceOption] = useState('<=');
+    const [distanceOption, setDistanceOption] = useState('<=');
 
-
-const BusSearchBar = () => {
-
-    const priceRef = useRef('');
-    const destinationRef = useRef('');
-    const distanceRef = useRef('');
-    const navigate = useNavigate();
-
-    const searchHandler = async() => {
-
-        const price = priceRef.current.value
-        const destination = destinationRef.current.value
-        const distance = distanceRef.current.value
-
-       console.log("price= ",price)
-        if(price ==='' || destination ==='' || distance ===''){
-            return alert('All fields are required!')
+    const searchHandler = () => {
+        if (!source && !destination) {
+            //alert('Please enter both source and destination to search.');
+            //return;
+        } else if (!source) {
+            alert('Please enter a source location.');
+            return;
+        } else if (!destination) {
+            alert('Please enter a destination location.');
+            return;
         }
 
-        if(price <= 0 || distance <= 0) {
-            return alert("Incorrect inputs, try Again")
+        let queryString = [];
+        if (price) queryString.push(`price${priceOption}=${price}`);
+        if (destination) queryString.push(`drop_address=${destination}`);
+        if (source) queryString.push(`source_address=${source}`);
+        if (distance) queryString.push(`distance${distanceOption}=${distance}`);
+
+        if (queryString.length > 0) {
+            onSearch(queryString.join('&'));
+        } else {
+            alert('Please provide at least one search parameter.');
         }
+    };
+    const resetSearch = () => {
+        // Reset all state variables
+            setPrice('');
+        setDestination('');
+        setSource('');
+        setDistance('');
+        setPriceOption('<=');
+        setDistanceOption('<=');
+        onSearch(null); 
+        setIsSearching(false); // Optionally reset the search on the parent component
+    };
 
-        const res = await fetch(`${BASE_URL}/buses/search/getBusBySearch?
-        price=${price}&drop_address=${destination}&distance=${distance}`);
+    return (
+        <Col lg='12'>
+            <div className='search_bar'>
+                <Form className="d-flex align-items-center gap-4">
+                    <FormGroup className="d-flex gap-3 form_group">
+                        <span><i className="ri-money-dollar-circle-line"></i></span>
+                        <div>
+                            <Label for="priceInput">Price</Label>
+                            <Input type="number" id="priceInput" placeholder='Enter price'
+                                   value={price} onChange={(e) => setPrice(e.target.value)} />
+                            <select value={priceOption} onChange={(e) => setPriceOption(e.target.value)}>
+                                <option value="<=">Less than or equal</option>
+                                <option value=">=">Greater than or equal</option>
+                            </select>
+                        </div>
+                    </FormGroup>
 
-        if(!res.ok) alert('Something went wrong');
+                    <FormGroup className="d-flex gap-3 form_group">
+                        <span><i className="ri-map-pin-line"></i></span>
+                        <div>
+                            <Label for="sourceInput">Source</Label>
+                            <Input type="text" id="sourceInput" placeholder='Enter source'
+                                   value={source} onChange={(e) => setSource(e.target.value)} />
+                        </div>
+                    </FormGroup>
 
-        const result = await res.json();
+                    <FormGroup className="d-flex gap-3 form_group">
+                        <span><i className="ri-map-pin-time-line"></i></span>
+                        <div>
+                            <Label for="destinationInput">Destination</Label>
+                            <Input type="text" id="destinationInput" placeholder='Enter destination'
+                                   value={destination} onChange={(e) => setDestination(e.target.value)} />
+                        </div>
+                    </FormGroup>
 
-        navigate(`/bus/search?price<=${price}&drop_address=${destination}&distance<=
-        ${distance}`, 
-        {state: result.data}
-        );
-    }
+                    <FormGroup className="d-flex gap-3 form_group">
+                        <span><i className="ri-roadster-line"></i></span>
+                        <div>
+                            <Label for="distanceInput">Distance</Label>
+                            <Input type="number" id="distanceInput" placeholder='Enter distance'
+                                   value={distance} onChange={(e) => setDistance(e.target.value)} />
+                            <select value={distanceOption} onChange={(e) => setDistanceOption(e.target.value)}>
+                                <option value="<=">Less than or equal</option>
+                                <option value=">=">Greater than or equal</option>
+                            </select>
+                        </div>
+                    </FormGroup>
 
-
-    return<Col lg='12'> 
-    <div className='search_bar'>
-        <Form className="d-flex align-items-center gap-4">
-            
-            <FormGroup className="d-flex gap-3 form_group form_group-fast">
-                <span><i class="ri-map-pin-line"></i></span>
-                <div>
-                    <h6>Price</h6>
-                    <input type="number" placeholder='Price?' ref={priceRef}/>
-                </div>
-            </FormGroup>
-
-            <FormGroup className="d-flex gap-3 form_group form_group-last">
-                 <span><i class="ri-map-pin-time-line"></i></span>
-                    <div>
-                        <h6>Destination</h6>
-                        <input type="text" placeholder='Destination' ref={destinationRef}/>
-                    </div>
-            </FormGroup>
-
-            <FormGroup className="d-flex gap-3 form_group form_group-fast">
-                <span><i class="ri-group-line"></i></span>
-                <div>
-                    <h6>Distance</h6>
-                        <input type="number" placeholder='Distance' ref={distanceRef} />
-                    </div>
-            </FormGroup>
-
-            <span className="search_icon" type='submit' onClick={searchHandler} >
-            <i class="ri-search-line"></i>
-            </span>
-        </Form>
-    </div>
-</Col>
+                    <span className="search_icon" onClick={searchHandler}>
+                        <i className="ri-search-line"></i>
+                    </span>{isSearching&&<Button color="secondary" onClick={resetSearch}>Clear</Button>
+                        
+                    }
+                    
+                </Form>
+            </div>
+        </Col>
+    );
 };
-
 
 export default BusSearchBar;

@@ -12,7 +12,7 @@ const Vendor = () => {
 
     return (
         <>
-            {user && user.isVendor ? (
+            {user && !user.data.isVendor ? (
                 <section>
                     <Row className='p-3'>
                         <Col lg='7' className='p-2'>
