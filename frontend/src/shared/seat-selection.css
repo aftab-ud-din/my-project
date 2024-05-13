@@ -37,18 +37,18 @@
     margin: 2px; /* Margins around each seat */
 }
 
+
+.seat.reserved {
+    color: #d81212; /* White text color for better contrast 
+    border-radius: 50%; /* Rounded seats for better visual appeal */
+}
+
+
 /* Hover and selected styles for seats */
 .seat:hover, .seat.selected {
     color: #4CAF50; /* White text color for better contrast */
     border-radius: 50%; /* Rounded seats for better visual appeal */
 }
-
-.seat.reserved {
-    color: #d81212; /* White text color for better contrast */
-    border-radius: 50%; /* Rounded seats for better visual appeal */
-}
-
-
 
 /* Adjustments for icons within seats for better visibility */
 .seat i {
