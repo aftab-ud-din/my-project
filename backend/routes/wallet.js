@@ -1,10 +1,11 @@
 import express from 'express';
-const router = express.Router();
-import Wallet from '../controllers/walletController.js';
+import { getBalance, topUp, deduct } from '../controllers/walletController.js';
 
-router.get('/balance', Wallet.getBalance);
-router.post('/topup', Wallet.topUp);
-router.post('/deduct', Wallet.deduct);
+const router = express.Router();
+
+router.get('/balance', getBalance);
+router.post('/topup', topUp);
+router.post('/deduct', deduct);
 
 
 export default router;

@@ -58,6 +58,31 @@ export const getBooking = async( req, res) => {
     }
 }
 
+export const getUserBooking = async (req, res) => {
+    const userId = req.query.userId;
+    try {  
+      // Find the wallet with the given userId
+      const booking = await BusBooking.find({ userId });
+      if (!booking) {
+        return res.status(404).json({
+          success: false,
+          message: "booking not found",
+        });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Successfully found",
+        data: booking,
+      });
+    } catch (err) {
+      console.error('Error fetching booking balance:', err);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+      });
+    }
+  };
+
 
 //get all booking
 export const getAllBooking = async( req, res) => {
@@ -95,3 +120,20 @@ export const getAllBookedSeats = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+export const deleteBooking = async (req, res) => {
+    const id = req.params.id;
+    console.log("hahahahahhaha");
+    try {
+        await BusBooking.findByIdAndDelete(id);
+            res.status(200).json({
+            success: true,
+            message: "Successfully deleted",
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to deleted",
+        });
+    }
+  }
