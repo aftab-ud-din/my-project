@@ -4,26 +4,28 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import '../styles/profile.css'
 import userImg from '../assets/images/user1.png'
 import { AuthContext } from '../context/AuthContext';
-import { BASE_URL } from './../utils/config' 
+import { BASE_URL } from './../utils/config';
+import axios from 'axios'; // Import axios
+import { FaTrash } from 'react-icons/fa';
 
 const UserProfile = () => {
   const {user} = useContext(AuthContext);
+  const [balance, setbalance] = useState(0);
   const [bookings, setBookings] = useState([]);
+  const [busbookings, setBusBookings] = useState([]);
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/bookings`, {
-          method: 'GET',
+        const res = await axios.get(`${BASE_URL}/booking/user/book?userId=${user.data._id}`, {
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${user.token}`,
           },
         });
 
-        if (res.ok) {
-          const data = await res.json();
-          setBookings(data.bookings);
+        if (res.status === 200) {
+          setBookings(res.data.data);
+          console.log(bookings)
         } else {
           console.error('Failed to fetch bookings');
         }
@@ -33,83 +35,158 @@ const UserProfile = () => {
     };
 
     fetchBookings();
-  }, [user.token]);
+  }, []);
+
+  useEffect(() => {
+    const fetchBusBookings = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/busbooking/user/book?userId=${user.data._id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        if (res.status === 200) {
+          setBusBookings(res.data.data);
+        } else {
+          console.error('Failed to fetch bookings');
+        }
+      } catch (error) {
+        console.error('Error fetching bookings:', error.message);
+      }
+    };
+
+    fetchBusBookings();
+  }, []);
+
+
+  const handleCancelBooking = async (bookingId) => {
+    const confirmCancel = window.confirm('Are you sure you want to cancel this booking?');
+    if (confirmCancel) {
+    try {
+      const res = await axios.delete(`${BASE_URL}/booking/${bookingId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        // Remove the canceled booking from the state
+        setBookings(bookings.filter((booking) => booking._id !== bookingId));
+      } else {
+        console.error('Failed to cancel booking');
+      }
+    } catch (error) {
+      console.error('Error canceling booking:', error.message);
+    }
+  }
+  };
+
+  const handleCancelBusBooking = async (bookingId) => {
+    const confirmCancel = window.confirm('Are you sure you want to cancel this booking?');
+    if (confirmCancel) {
+    try {
+      const res = await axios.delete(`${BASE_URL}/busbooking/${bookingId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      if (res.status === 200) {
+        // Remove the canceled booking from the state
+        setBusBookings(busbookings.filter((booking) => booking._id !== bookingId));
+      } else {
+        console.error('Failed to cancel booking');
+      }
+    } catch (error) {
+      console.error('Error canceling booking:', error.message);
+    }
+  }
+  };
+
+  useEffect(() => {
+    const fetchWallet = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/wallet/balance?userId=${user.data._id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        if (res.status === 200) {
+          setbalance(res.data.data);
+        } else {
+          console.error('Failed to fetch bookings');
+        }
+      } catch (error) {
+        console.error('Error fetching bookings:', error.message);
+      }
+    };
+
+    fetchWallet();
+  }, []);
+
+
 
   return (
-    <section className='profileSeciton'>
-      <Container >
-      <Row>
-        {/* Left Column - User Info */}
-        <Col lg={4}>
-          <div className='info'>
-            <div className='divOne'>
-        {/* Display other user information */}
-              <div className="ImgDiv mb-4">
-                <img src={userImg} alt="" />
-              </div>
+    <div className="profile-container">
+    <div className="left-container">
+      <img src={userImg} alt="" />
               <p>Name: {user.data.username}</p>
               <p>Email: {user.data.email}</p>
               <p>Phone: {user.data.phone}</p>
-              <p>Wallet: {user.data.wallet}</p>
-            </div>
-          </div>
-        </Col>
-
-        {/* Right Column - Booking Sections */}
-        <Col lg={8}>
+              <p>Wallet: {balance}</p>      
+    </div>
+    <div className="right-container">
+      <div className="top-right-container">
+      <div className="top-right-container">
+          <h2>Tour Bookings</h2>
           <Row>
-            {/* First Row - Tour Booking */}
-            <Col lg={6}>
-              <div className='tourBookings'>
-                <Row>
-                  <div className='title'>tour booking</div>
-                  <div className='heading'>
-                    <div>Name</div>
-                    <div>Date</div>
-                    <div>price</div>
-                    <div>Phone</div>
-                    <div>Cancel</div>
-                  </div>
-                  <div className='results'>
-                  {bookings.map((booking) => (
-                  <div key={booking._id} className='results'>
-                    <div>{booking.name}</div>
-                    <div>{booking.date}</div>
-                    <div>{booking.price}</div>
-                    <div>{booking.phone}</div>
-                    <Button className='primary-btn'>Cancel</Button>
-                  </div>
-                ))}
-                  </div>   
-                </Row>
-
-             </div>
-            
-
-            {/* Second Row - Bus Booking */}
-              <div className='busBookings'>
-                <Row>
-                  <div className='title'>bus booking</div><div className='heading'>
-                    <div>Name</div>
-                    <div>Date</div>
-                    <div>price</div>
-                    <div>Phone</div>
-                    <div>Cancel</div>
-                  </div>
-                  <div className='results'>bus booking</div>  
-                </Row>
-             </div>
-            </Col>
+            <Col><strong>Tour Name</strong></Col>
+            <Col><strong>Guest Size</strong></Col>
+            <Col><strong>Booked At</strong></Col>
+            <Col><strong>Cancel</strong></Col>
           </Row>
-        </Col>
-      </Row>
-    </Container>
-    </section>
+          {bookings.length > 0 ? (
+          bookings.map((bookings) => (
+            <Row key={bookings._id}>
+              <Col>{bookings.tourName}</Col>
+              <Col>{bookings.guestSize}</Col>
+              <Col>{new Date(bookings.bookAt).toLocaleDateString()}</Col>
+              <Col>
+                <FaTrash style={{ color: 'red', cursor: 'pointer' }} onClick={() => handleCancelBooking(bookings._id)} />
+              </Col>
+            </Row>
+          ))
+        ):(<h4>No Bookings</h4>)}
+        </div>
+      </div>
+      <div className="bottom-right-container">
+      <h2>Bus Bookings</h2>
+          <Row>
+            <Col><strong>Name</strong></Col>
+            <Col><strong>Phone</strong></Col>
+            <Col><strong>Seats</strong></Col>
+            <Col><strong>Booked At</strong></Col>
+            <Col><strong>Cancel</strong></Col>
+          </Row>
+          {busbookings.length > 0 ? (
+          busbookings.map((busbookings) => (
+            <Row key={busbookings._id}>
+              <Col>{busbookings.fullName}</Col>
+              <Col>{busbookings.phone}</Col>
+              <Col>{busbookings.seatsBooked.join(', ')}</Col>
+              <Col>{new Date(busbookings.createdAt).toLocaleDateString()}</Col>
+              <Col>
+                <FaTrash style={{ color: 'red', cursor: 'pointer' }} onClick={() => handleCancelBusBooking(busbookings._id)} />
+              </Col>
+            </Row>
+          ))
+        ):(<h4>No Bookings</h4>)}
+      </div>
+    </div>
+  </div>
   );
 };
 
 export default UserProfile;
-
-
-
 

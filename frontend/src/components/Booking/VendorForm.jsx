@@ -46,7 +46,6 @@ const {dispatch} = useContext(AuthContext);
             })
             
             const result = await res.json();
-            console.log("hhh",result)
 
             if(!res.ok) {
                 
