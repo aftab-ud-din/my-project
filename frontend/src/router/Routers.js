@@ -17,7 +17,7 @@ import Profile from '../pages/Profile';
 import Track from '../pages/Track'
 import Vendor from '../pages/Vendor';
 import VendorTour from '../pages/VendorTour'
-import Admin from '../Admin/Admin';
+import AdminDashboard from '../Admin/AdminDashboard';
 
 
 const Routers = () => {
@@ -40,7 +40,7 @@ const Routers = () => {
         <Route path='/thank-you' element={<ThankYou />} />
         <Route path='/bus/search' element={<BusSearchResultList />} />
         <Route path='/tours/search' element={<SearchResultList />} />
-        <Route path='/admin' element={<Admin />} />
+        <Route path='/admin/*' element={<AdminDashboard />} />
 
     </Routes>
   );

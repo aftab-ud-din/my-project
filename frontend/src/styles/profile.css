@@ -1,4 +1,55 @@
-.profileSeciton {
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url('../assets/images/background.jpg') no-repeat center center;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .left-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .right-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .top-right-container,
+  .bottom-right-container {
+    flex: 1;
+    background-color: #e0e0e0;
+    padding: 20px;
+  }
+  
+  /* Media query for landscape mode */
+  @media screen and (min-aspect-ratio: 1/1) {
+    .profile-container {
+      flex-direction: row;
+    }
+  
+    .left-container {
+      flex: 1;
+    }
+  
+    .right-container {
+      flex: 2;
+      flex-direction: column;
+    }
+  
+    .top-right-container,
+    .bottom-right-container {
+      flex: 1;
+    }
+  }
+
+
+
+/*.profileSeciton {
     background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
     url('../assets/images/background.jpg') no-repeat center center;
     background-size: cover;
@@ -51,10 +102,14 @@
     margin-bottom: 3rem;
 }
 
+.profileSeciton .book {
+    width: auto;
+    height: inherit;
+}
 .profileSeciton .tourBookings {
-    background: white;  /* Set background color for tourBookings */
+    background: white;  /
 }
 
 .profileSeciton .busBookings {
-    background: white;  /* Set background color for busBookings */
-}
+    background: white;  
+}*/

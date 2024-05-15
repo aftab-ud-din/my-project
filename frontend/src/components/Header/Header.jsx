@@ -157,12 +157,10 @@ const Header = () => {
                     <button className='invisible-button' onClick={handleAdminClick}>
                       <h5 className="mb-0">{user.data.username}</h5>
                     </button> 
-                      {console.log('User from context:', user.data.username)}
                       </> ):(<>
                         <button className='invisible-button' onClick={handleProfileClick}>
                         <h5 className="mb-0">{user.data.username}</h5>
                       </button> 
-                        {console.log('User from context:', user.data.username)}
                         </> )
                       }
                       <Button className='btn btn-dark' onClick={logout}>Logout</Button>

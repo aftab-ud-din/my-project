@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
 
-
 const TourForm = ({vendor}) => {
 
     const navigate =useNavigate();
@@ -29,6 +28,14 @@ console.log(tour);
     const handleChange = e =>{
         setTour(prev=>({...prev, [e.target.id]: e.target.value }));
     };
+
+    const [postImage, setPostImage] = useState({myfile : ""});
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        const base64 = await convertToBase64(file);
+        setPostImage({ ...postImage, myfile : base64})
+    }
 
     const handleClick = async e=>{
         e.preventDefault();
@@ -99,6 +106,7 @@ console.log(tour);
 
             <FormGroup>
                 <input type="file" placeholder='Vehicle Image' id='photo'
+                accept='.jpeg, .png, .jpg'
                 onChange={handleChange} />
             </FormGroup>
 
@@ -124,3 +132,16 @@ console.log(tour);
 }
 
 export default TourForm
+
+function convertToBase64(file){
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+            resolve(fileReader.result)
+        };
+        fileReader.onerror = (error) => {
+            reject(error)
+        }
+    })
+}
