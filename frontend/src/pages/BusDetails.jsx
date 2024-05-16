@@ -24,12 +24,10 @@ const BusDetails = () => {
 
 useEffect(()=>{
 
-  console.log("id",id)
 axios.get(`${BASE_URL}/buses/${id}`)
  .then(res=>{
   setBus(res.data.data)
-   setLoading(false)
-  console.log("bus = ",res.data)   
+   setLoading(false)  
  }).catch(err=>{
   console.log(err)
  })

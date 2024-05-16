@@ -25,7 +25,6 @@ const UserProfile = () => {
 
         if (res.status === 200) {
           setBookings(res.data.data);
-          console.log(bookings)
         } else {
           console.error('Failed to fetch bookings');
         }

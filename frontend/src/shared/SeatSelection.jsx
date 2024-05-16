@@ -23,7 +23,6 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats,seats}) 
   
     
     useEffect(()=>{
-       // console.log(convertToLinearIndices(selectedSeats,seatsPerRow))
         setSeats(convertToLinearIndices(selectedSeats,seatsPerRow))
        
     },[selectedSeats])
@@ -34,7 +33,6 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats,seats}) 
       const fetchBookedSeats = async () => {
           try {
               const res = await axios.get(`${BASE_URL}/busbooking/getAll/seats/${bus._id}`);
-              console.log('reserved seats ',res.data.data)
               setInitiallyReservedSeats(res.data.data);
 
               if (res==200) {
@@ -60,9 +58,7 @@ const SeatSelection = ({ setSelectedSeats, selectedSeats, bus ,setSeats,seats}) 
 }
 let reservedSeats=[]
     const handleSeatClick = (row, seatNumber) => {
-        console.log("jjjj",initiallyReservedSeats)
        reservedSeats=convertFromLinearIndices(initiallyReservedSeats,seatsPerRow)
-        console.log("=>>>>>>",reservedSeats)
     
         const seatId = `${row}-${seatNumber}`;
         

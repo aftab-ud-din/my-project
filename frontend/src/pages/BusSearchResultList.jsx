@@ -12,7 +12,6 @@ const BusSearchResultList = () => {
 
   const [data] = useState(location.state);
 
-  console.log(data);
 
   return (
   <>

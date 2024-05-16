@@ -28,7 +28,6 @@ const Bus = () => {
     const pages = Math.ceil(busCount/ 8);
     setPageCount(pages);
     window.scrollTo(0, 0);
-    console.log("issearching",isSearching)
   },[page, busCount, buses,isSearching])
 
   const handleSearch = async (query) => {

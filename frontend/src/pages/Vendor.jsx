@@ -8,7 +8,6 @@ import { AuthContext } from '../context/AuthContext';
 
 const Vendor = () => {
     const { user } = useContext(AuthContext);
-    console.log("user=>",user.data)
 
     return (
         <>

@@ -12,8 +12,6 @@ const SearchResultList = () => {
 
   const [data] = useState(location.state);
 
-  console.log(data);
-
   return (
   <>
     <CommonSection title={"Tour Search Result"}/>

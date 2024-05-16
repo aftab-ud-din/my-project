@@ -5,6 +5,7 @@ import { Form, FormGroup, ListGroup, ListGroupItem, Button} from "reactstrap";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { BASE_URL } from '../../utils/config';
+import FileBase64 from 'react-file-base64';
 
 const TourForm = ({vendor}) => {
 
@@ -29,18 +30,15 @@ console.log(tour);
         setTour(prev=>({...prev, [e.target.id]: e.target.value }));
     };
 
-    const [postImage, setPostImage] = useState({myfile : ""});
-
     const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
-        const base64 = await convertToBase64(file);
-        setPostImage({ ...postImage, myfile : base64})
+        <FileBase64
+        multiple={ false }
+        onDone={ ({base64}) =>setTour(prev => ({...
+            prev, photo: e.target.value})) } />
     }
 
     const handleClick = async e=>{
         e.preventDefault();
-
-        console.log(tour);
 
         try {
             if(!user || user === undefined || user===null){
@@ -107,7 +105,7 @@ console.log(tour);
             <FormGroup>
                 <input type="file" placeholder='Vehicle Image' id='photo'
                 accept='.jpeg, .png, .jpg'
-                onChange={handleChange} />
+                onChange={handleFileUpload} />
             </FormGroup>
 
 
@@ -132,16 +130,3 @@ console.log(tour);
 }
 
 export default TourForm
-
-function convertToBase64(file){
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-        fileReader.onload = () => {
-            resolve(fileReader.result)
-        };
-        fileReader.onerror = (error) => {
-            reject(error)
-        }
-    })
-}

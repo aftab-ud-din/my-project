@@ -11,8 +11,6 @@ const FeaturedTourList = () => {
     `${BASE_URL}/tours/search/getFeaturedTour`
     );
 
-    console.log(featuredTours);
-
   return <>
     {loading && <h4>Loading............ </h4>}
     {error && <h4>{error} </h4>}

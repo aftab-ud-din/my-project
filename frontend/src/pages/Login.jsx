@@ -36,10 +36,6 @@ const Login = () => {
           credentials
       )
 
-      //const result = await res.json;
-      // alert(result.message);
-
-     console.log(res);
       if(res.status===200){
         alert(res.data.message);
         navigate('/');
