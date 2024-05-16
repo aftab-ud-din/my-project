@@ -8,7 +8,6 @@ export const register = async (req, res) =>{
     try{
 
         //hashing password
-        console.log(req.body)
         const username=req.body.username;
         const email=req.body.email;
         const password = req.body.password

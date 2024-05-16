@@ -40,8 +40,6 @@ console.log(tour);
     const handleClick = async e=>{
         e.preventDefault();
 
-        console.log(tour);
-
         try {
             if(!user || user === undefined || user===null){
                 return alert('please sign in')

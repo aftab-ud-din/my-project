@@ -13,7 +13,6 @@ import '../components/Booking/booking.css'
 const VendorTour = () => {
   
   const {user} = useContext(AuthContext);
-  console.log("uuuu",user)
   return (
     <section>
         <Row className='p-3'>

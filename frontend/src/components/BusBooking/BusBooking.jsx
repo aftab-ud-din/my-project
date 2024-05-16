@@ -15,8 +15,6 @@ const BusBooking = ({ bus, avgRating }) => {
 
     const {scheduledAt, pick_up_time,_id, price, reviews, reserved} = bus;
     const [seats, setSeats]=useState([])
-    //const id=bus.id;
-    console.log("buses are",_id)
     const navigate =useNavigate();
 
     const {user} = useContext(AuthContext);
@@ -49,32 +47,21 @@ const BusBooking = ({ bus, avgRating }) => {
 
     
     const showDate = scheduledAt.substring(0, 10);
- //   console.log("date : ",showDate);
 
     const handleChange = e =>{
         setBusBooking(prev=>({...prev, [e.target.id]: e.target.value }));
     };
 
     const serviceFee = 10;
-    console.log("selectedSeats = ",selectedSeats);
-   //console.log("selected length = ",selectedSeats.length);
    const totalAmount = Number(price) * selectedSeats.length + Number(serviceFee);
 
     const handleClick = async e=>{
     
         
-        console.log(busbooking);
 
         try {
-            // if(!user || user === undefined || user===null){
-            //     return alert('please sign in')
-            // }
-            ///axios.post('createBooking')
-        
             const res = await axios.post(`${BASE_URL}/busbooking`,busbooking)
-            console.log(res)
 
-            //const result = await res.json();
             if(res.status==200) {
                 
                 navigate("/thank-you");

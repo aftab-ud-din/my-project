@@ -17,7 +17,6 @@ const TourDetails = () => {
   const[tourRating, setTourRating]=useState(null)
   const {user} = useContext(AuthContext);
 
-  //console.log(user.data)
   // fetch data from database
   const {data: tour, loading, error} = useFetch(`${BASE_URL}/tours/${id}`)
   

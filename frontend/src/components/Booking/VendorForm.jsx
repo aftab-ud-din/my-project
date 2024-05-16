@@ -20,7 +20,6 @@ const VendorForm = () => {
         license: null,
     });
     
-console.log(vendor);
 const {dispatch} = useContext(AuthContext);
     const handleChange = e =>{
         setVendor(prev=>({...prev, [e.target.id]: e.target.value }));
@@ -28,8 +27,6 @@ const {dispatch} = useContext(AuthContext);
     
     const handleClick = async e=>{
         e.preventDefault();
-
-        console.log(vendor);
 
         try {
             if(!user || user === undefined || user===null){

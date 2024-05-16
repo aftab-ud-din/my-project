@@ -46,7 +46,7 @@ const Track = () => {
         latitude: '',
     });
 
-    const handleManualLocationSubmit = (e) => {
+/*    const handleManualLocationSubmit = (e) => {
         e.preventDefault();
         const { longitude, latitude } = manualLocation;
         if (code !== 'y') {
@@ -59,7 +59,7 @@ const Track = () => {
                 zoom: 15, // Optionally, adjust the zoom level as needed
             }));
         }
-    };
+    };*/
 
     const busStations = [
         { name: "Karachi", longitude: 67.0011, latitude: 24.8607 },
@@ -74,7 +74,7 @@ const Track = () => {
     return (
         <>
             <CommonSection title={"Always be Updated"} />
-            <section>
+{/*            <section>
                 <Container>
                     <Row>
                         <Form onSubmit={handleManualLocationSubmit}>
@@ -93,7 +93,7 @@ const Track = () => {
                         </Form>
                     </Row>
                 </Container>
-            </section>
+            </section>*/}
 
             <MapGL
                 mapboxAccessToken={TOKEN}
