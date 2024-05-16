@@ -37,6 +37,33 @@ const navLinks = [
   }
 ]
 ;
+const navLinks2 = [
+  {
+    path:'/home',
+    display :'Home'
+  },
+  {
+    path:'/about',
+    display :'About'
+  },
+  {
+    path:'/bus',
+    display :'Bus'
+  },
+  {
+    path:'/tours',
+    display :'Tours'
+  },
+  {
+    path:'/track',
+    display :'Track'
+  },
+  {
+    path:'/chatbot',
+    display :'ChatBot'
+  },
+  
+]
 
 
 const Header = () => {
@@ -89,8 +116,8 @@ const Header = () => {
               <img src={logo} alt="" />
             </div>
             <div className="navigations">
-              <ul className="menu align-items-center gap-5">
-                { navLinks.map((item, index) => (
+              <ul className="menu align-items-center gap-5">{
+                user?( <>{ navLinks.map((item, index) => (
                   <li className="nav_item" key={index}>
                     <NavLink
                       to={item.path}
@@ -101,7 +128,20 @@ const Header = () => {
                       {item.display}
                     </NavLink>
                   </li>
-                ))}
+                ))}</>):(<> { navLinks2.map((item, index) => (
+                  <li className="nav_item" key={index}>
+                    <NavLink
+                      to={item.path}
+                      className={(navClass) =>
+                        navClass ? "active_link" : ""
+                      }
+                    >
+                      {item.display}
+                    </NavLink>
+                  </li>
+                ))}</>)
+              }
+               
               </ul>
             </div>
           {/*  =============================menu end==========================*/}
